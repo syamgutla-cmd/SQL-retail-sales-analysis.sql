@@ -186,4 +186,23 @@ GROUP BY category
 ORDER BY unique_customer DESC;
 
 
+--Q.10
+SELECT 
+      CASE 
+	     WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
+		 WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
+		 ELSE 'Evening'
+	  END AS Shift,
+	  COUNT (*) AS total_orders
+FROM retail_sales
+GROUP BY
+     CASE 
+	     WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
+		 WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
+	     ELSE 'Evening'
+	 END
+ORDER BY total_orders DESC;
+    
+
+--FIRST PROJECT IN SQL IS DONE SUCCESSFULLY
 
