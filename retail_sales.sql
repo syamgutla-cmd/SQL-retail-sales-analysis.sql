@@ -172,3 +172,18 @@ ORDER BY best_selling DESC
 LIMIT 1;
 
 
+--Q.8
+SELECT * FROM retail_sales 
+ORDER BY total_sale DESC
+LIMIT 5;
+
+
+--Q.9
+SELECT category,
+       COUNT(DISTINCT customer_id) AS unique_customer
+FROM retail_sales
+GROUP BY category
+ORDER BY unique_customer DESC;
+
+
+
