@@ -116,5 +116,59 @@ FROM retail_sales
 GROUP BY category; --group by and distinct works fundamentally different it cant reutrn sums or anything like that but group by can
   
    
+--Q.4
+SELECT AVG(age) AS avg_beauty_age
+FROM retail_sales
+WHERE category = 'Beauty';
+
+
+--Q.5
+SELECT * FROM retail_sales
+WHERE total_sale > 1000;
+
+
+--Q.6
+SELECT COUNT(transaction_id) 
+FROM retail_sales
+WHERE is_male = 'true';
+
+SELECT COUNT(transaction_id) 
+FROM retail_sales
+WHERE is_male = 'false';
+
+
+--Found some better alternate methods
+
+--Approach 1:up and down displayed
+SELECT is_male,COUNT(is_male) AS total_transactions
+FROM retail_sales
+GROUP BY is_male
+ORDER BY total_transactions ASC;
+
+--Approach 2:side by side displayed
+SELECT 
+    COUNT(CASE WHEN is_male = 'true' THEN 1 END) AS male_count,
+	COUNT(CASE WHEN is_male = 'false' THEN 1 END) AS female_count
+FROM retail_sales
+
+
+--Q.7
+--first find average in each month
+WITH monthly_averages AS(
+	SELECT 
+	    EXTRACT(MONTH FROM sale_date) AS month,
+		EXTRACT(YEAR FROM sale_date) AS year,
+		AVG(total_sale) AS avg_value
+	FROM retail_sales
+	GROUP BY
+	     EXTRACT(MONTH FROM sale_date),
+		 EXTRACT(YEAR FROM sale_date)
+		 )
+
+--second find the best selling month
+SELECT year,month,avg_value AS best_selling
+FROM monthly_averages
+ORDER BY best_selling DESC
+LIMIT 1;
 
 
